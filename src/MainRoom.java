@@ -1,16 +1,23 @@
 import java.util.Scanner;
 import java.util.Random;
+import java.text.NumberFormat;
 
 public class MainRoom {
 	static Scanner darkly = new Scanner(System.in);
 	static Random rnd = new Random();
+	static NumberFormat currency = NumberFormat.getCurrencyInstance();
+	
 	static boolean secretRoomFound = false;
 	static boolean[] roomVisitedFlag = {false, false, false, false, false, false, false, false};
 	static boolean exiting = false;
 	//all flags initialized to false
+	static double moneyCollected = 0.00; 
+	static String thingsSeen = "";
 
 	private static void roomDescribe(String where, String[] stuff, String directions)
 	{
+		System.out.println("You have " + currency.format(moneyCollected));
+		
 		System.out.println("You are in " + where);
 		for (String thing : stuff) {
 			System.out.println("You see " + thing);
@@ -25,7 +32,14 @@ public class MainRoom {
 		things[0] = "a dead scorpion";
 		String direct = "to the north (n) or the south (s)";
 
-		roomVisitedFlag[0] = true;
+		if(!roomVisitedFlag[0])
+		{
+			roomVisitedFlag[0] = true;
+			collectMoney();
+			for (String thing : things) {
+				thingsSeen += "\t" + thing + "\n";
+			}
+		}
 		
 		do
 		{
@@ -55,7 +69,14 @@ public class MainRoom {
 		things[0] = "a phone";
 		String direct = "to the east (e), the south (s) or the west (w)";
 
-		roomVisitedFlag[1] = true;
+		if(!roomVisitedFlag[1])
+		{
+			roomVisitedFlag[1] = true;
+			collectMoney();
+			for (String thing : things) {
+				thingsSeen += "\t" + thing + "\n";
+			}
+		}
 		
 		do
 		{
@@ -87,7 +108,14 @@ public class MainRoom {
 		things[0] = "spiders";
 		String direct = "to the north (n) or the east (e)";
 
-		roomVisitedFlag[2] = true;
+		if(!roomVisitedFlag[2])
+		{
+			roomVisitedFlag[2] = true;
+			collectMoney();
+			for (String thing : things) {
+				thingsSeen += "\t" + thing + "\n";
+			}
+		}
 		
 		do
 		{
@@ -116,7 +144,14 @@ public class MainRoom {
 		things[0] = "bats";
 		String direct = "to the north (n) or the west (w)";
 
-		roomVisitedFlag[3] = true;
+		if(!roomVisitedFlag[3])
+		{
+			roomVisitedFlag[3] = true;
+			collectMoney();
+			for (String thing : things) {
+				thingsSeen += "\t" + thing + "\n";
+			}
+		}
 		
 		do
 		{
@@ -146,7 +181,14 @@ public class MainRoom {
 		things[1] = "an empty box";
 		String direct = "to the south (s)";
 
-		roomVisitedFlag[4] = true;
+		if(!roomVisitedFlag[4])
+		{
+			roomVisitedFlag[4] = true;
+			collectMoney();
+			for (String thing : things) {
+				thingsSeen += "\t" + thing + "\n";
+			}
+		}
 		
 		do
 		{
@@ -172,7 +214,14 @@ public class MainRoom {
 		things[0] = "3 walking skeletons";
 		String direct = "to the east (e)";
 		
-		roomVisitedFlag[5] = true;
+		if(!roomVisitedFlag[5])
+		{
+			roomVisitedFlag[5] = true;
+			collectMoney();
+			for (String thing : things) {
+				thingsSeen += "\t" + thing + "\n";
+			}
+		}
 		
 		if(!secretRoomFound)
 		{
@@ -215,7 +264,14 @@ public class MainRoom {
 		things[0] = "a treasure chest";
 		String direct = "to the south (s) or the west (w)";
 
-		roomVisitedFlag[6] = true;
+		if(!roomVisitedFlag[6])
+		{
+			roomVisitedFlag[6] = true;
+			collectMoney();
+			for (String thing : things) {
+				thingsSeen += "\t" + thing + "\n";
+			}
+		}
 		
 		do
 		{
@@ -245,7 +301,14 @@ public class MainRoom {
 		things[0] = "piles of gold";
 		String direct = "to the west (w)";
 
-		roomVisitedFlag[7] = true;
+		if(!roomVisitedFlag[7])
+		{
+			roomVisitedFlag[7] = true;
+			collectMoney();
+			for (String thing : things) {
+				thingsSeen += "\t" + thing + "\n";
+			}
+		}
 		
 		do
 		{
@@ -282,17 +345,26 @@ public class MainRoom {
 			}
 		}
 		System.out.printf("You visited %d rooms%n", roomsVisited);
+		System.out.printf("You saw: %n%s", thingsSeen);
 		
 		int followed = rnd.nextInt(4);
 		if(followed == 0)
 		{
-			System.out.println("A ghost has followed you out.");
+			System.out.println("The ghost of Zork has followed you out.");
 		}
 		else
 		{
 			System.out.println("You were not followed.");
 		}
 		exiting = true;
+	}
+	
+	public static void collectMoney()
+	{
+		double moneyInRoom = (double)rnd.nextInt(100000) / 100;
+		//Using random integer from 0-100000 divided by 100 to give exactly two decimal places
+		System.out.println("You found " + currency.format(moneyInRoom));
+		moneyCollected += moneyInRoom;
 	}
 
 	public static void main(String[] args) {
