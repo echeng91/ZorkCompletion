@@ -11,7 +11,8 @@ public class MainRoom {
 	static boolean[] roomVisitedFlag = {false, false, false, false, false, false, false, false};
 	static boolean exiting = false;
 	//all flags initialized to false
-	static double moneyCollected = 0.00; 
+	static int steps = 0;
+	static double moneyCollected = 0.00;
 	static String thingsSeen = "";
 
 	private static void roomDescribe(String where, String[] stuff, String directions)
@@ -31,14 +32,13 @@ public class MainRoom {
 		String[] things = new String[1];
 		things[0] = "a dead scorpion";
 		String direct = "to the north (n) or the south (s)";
-
+		
+		steps++;
 		if(!roomVisitedFlag[0])
 		{
 			roomVisitedFlag[0] = true;
 			collectMoney();
-			for (String thing : things) {
-				thingsSeen += "\t" + thing + "\n";
-			}
+			noteThingsSeen(things);
 		}
 		
 		do
@@ -68,14 +68,13 @@ public class MainRoom {
 		String[] things = new String[1];
 		things[0] = "a phone";
 		String direct = "to the east (e), the south (s) or the west (w)";
-
+		
+		steps++;
 		if(!roomVisitedFlag[1])
 		{
 			roomVisitedFlag[1] = true;
 			collectMoney();
-			for (String thing : things) {
-				thingsSeen += "\t" + thing + "\n";
-			}
+			noteThingsSeen(things);
 		}
 		
 		do
@@ -107,14 +106,13 @@ public class MainRoom {
 		String[] things = new String[1];
 		things[0] = "spiders";
 		String direct = "to the north (n) or the east (e)";
-
+		
+		steps++;
 		if(!roomVisitedFlag[2])
 		{
 			roomVisitedFlag[2] = true;
 			collectMoney();
-			for (String thing : things) {
-				thingsSeen += "\t" + thing + "\n";
-			}
+			noteThingsSeen(things);
 		}
 		
 		do
@@ -143,14 +141,13 @@ public class MainRoom {
 		String[] things = new String[1];
 		things[0] = "bats";
 		String direct = "to the north (n) or the west (w)";
-
+		
+		steps++;
 		if(!roomVisitedFlag[3])
 		{
 			roomVisitedFlag[3] = true;
 			collectMoney();
-			for (String thing : things) {
-				thingsSeen += "\t" + thing + "\n";
-			}
+			noteThingsSeen(things);
 		}
 		
 		do
@@ -180,14 +177,13 @@ public class MainRoom {
 		things[0] = "dust";
 		things[1] = "an empty box";
 		String direct = "to the south (s)";
-
+		
+		steps++;
 		if(!roomVisitedFlag[4])
 		{
 			roomVisitedFlag[4] = true;
 			collectMoney();
-			for (String thing : things) {
-				thingsSeen += "\t" + thing + "\n";
-			}
+			noteThingsSeen(things);
 		}
 		
 		do
@@ -214,13 +210,12 @@ public class MainRoom {
 		things[0] = "3 walking skeletons";
 		String direct = "to the east (e)";
 		
+		steps++;
 		if(!roomVisitedFlag[5])
 		{
 			roomVisitedFlag[5] = true;
 			collectMoney();
-			for (String thing : things) {
-				thingsSeen += "\t" + thing + "\n";
-			}
+			noteThingsSeen(things);
 		}
 		
 		if(!secretRoomFound)
@@ -263,14 +258,13 @@ public class MainRoom {
 		String[] things = new String[1];
 		things[0] = "a treasure chest";
 		String direct = "to the south (s) or the west (w)";
-
+		
+		steps++;
 		if(!roomVisitedFlag[6])
 		{
 			roomVisitedFlag[6] = true;
 			collectMoney();
-			for (String thing : things) {
-				thingsSeen += "\t" + thing + "\n";
-			}
+			noteThingsSeen(things);
 		}
 		
 		do
@@ -300,14 +294,13 @@ public class MainRoom {
 		String[] things = new String[1];
 		things[0] = "piles of gold";
 		String direct = "to the west (w)";
-
+		
+		steps++;
 		if(!roomVisitedFlag[7])
 		{
 			roomVisitedFlag[7] = true;
 			collectMoney();
-			for (String thing : things) {
-				thingsSeen += "\t" + thing + "\n";
-			}
+			noteThingsSeen(things);
 		}
 		
 		do
@@ -344,6 +337,7 @@ public class MainRoom {
 				roomsVisited++;
 			}
 		}
+		System.out.printf("You took %d steps%n", steps);
 		System.out.printf("You visited %d rooms%n", roomsVisited);
 		System.out.printf("You saw: %n%s", thingsSeen);
 		
@@ -365,6 +359,13 @@ public class MainRoom {
 		//Using random integer from 0-100000 divided by 100 to give exactly two decimal places
 		System.out.println("You found " + currency.format(moneyInRoom));
 		moneyCollected += moneyInRoom;
+	}
+	
+	public static void noteThingsSeen(String[] stuff)
+	{
+		for (String thing : stuff) {
+			thingsSeen += "\t" + thing + "\n";
+		}
 	}
 
 	public static void main(String[] args) {
